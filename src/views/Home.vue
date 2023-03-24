@@ -1,7 +1,6 @@
 <template>
   <custom-table :form-inline="formInline" :table-column="column" :table-data="tableData" :currentPage="currentPage"
-                :pageSize="pageSize" :total="total"
-                @search="onSearch" @pageChange="onPageChange" @selectChange="onSelectChange"/>
+                :pageSize="pageSize" :total="total" :operations="operations" @operate="onOperate"/>
 </template>
 
 <script>
@@ -14,191 +13,127 @@ export default {
   },
   data() {
     return {
-      formInline: [
-        {
-          formKey: "name", label: "名称", name: null,
-        },
-        {
-          formKey: "id", label: "ID", id: null,
-        }
-      ],
+      formInline: {
+        children: [
+          {
+            key: "name", label: "终端名", value: null
+          },
+          {
+            key: "province", label: "身份", value: null
+          },
+          {
+            key: "city", label: "城市", value: null
+          },
+          {
+            key: "submiterId", label: "提交医生", value: null
+          },
+          {
+            key: "id", label: "终端ID", value: null
+          }
+        ],
+        filters: [
+          {
+            key: "state", label: "状态", value: null
+          },
+          {
+            key: "submitType", label: "提交人身份", value: null
+          }
+        ]
+      },
       multipleSelection: [],
       currentPage: 1,
       pageSize: 20,
       total: 0,
       column: [
+        {title: "医院名", key: "name", sortable: false},
+        {title: "终端ID", key: "id", sortable: false},
+        {title: "提交人", key: "submiterId", sortable: false},
         {
-          title: '信使手机号',
-          key: 'msgerMobile',
-        }, {
-          title: '终端名称',
-          key: 'hospitalName',
-        }, {
-          title: '科室',
-          key: 'departmentName',
-        }, {
-          title: '医生姓名',
-          key: 'doctorName',
+          title: "提交人身份", key: "submitType", width: 122, align: "center", sortable: false, filters: [
+            {text: "信使", value: "msger", effect: "light"},
+            {text: "医生", value: "doctor", effect: "plain"},
+            {text: "管理员", value: "admin", effect: "dark"}
+          ],
+          filterMultiple: false
+        },
+        {title: "省份", key: "provinceName", sortable: false},
+        {
+          title: "城市", key: "cityName", sortable: false
+        },
+        {
+          title: "状态", key: "state", width: 84, align: "center", sortable: false,
+          filters: [
+            {text: "待审核", value: "draft", effect: "light"},
+            {text: "已通过", value: "approved", effect: "plain"},
+            {text: "已拒绝", value: "rejected", effect: "dark"}
+          ],
+          filterMultiple: true
+        },
+        {title: "提交时间", key: "createTime", sortable: true},
+        {
+          title: "操作", key: "operation", width: 140, align: "center", sortable: false
         }
       ],
-      tableData: [{
-        "id": 117197,
-        "title": "1111111",
-        "source": "医时",
-        "weight": 0,
-        "updateTime": "2022-09-29 17:48:40",
-        "lables": [],
-        "status": 0,
-        "top": 0,
-        "description": "",
-        "html": null,
-        "cover": null,
-        "keywords": []
-      }, {
-        "id": 117196,
-        "title": "大好山河",
-        "source": "医时医信",
-        "weight": 0,
-        "updateTime": "2022-09-29 15:57:00",
-        "lables": [],
-        "status": 0,
-        "top": 0,
-        "description": "",
-        "html": null,
-        "cover": null,
-        "keywords": []
-      }, {
-        "id": 117195,
-        "title": "大好山河",
-        "source": "医时医信",
-        "weight": 0,
-        "updateTime": "2022-09-29 15:56:54",
-        "lables": [],
-        "status": 1,
-        "top": 0,
-        "description": "",
-        "html": null,
-        "cover": null,
-        "keywords": []
-      }, {
-        "id": 116165,
-        "title": "第七十一期丨处方审核案例解析",
-        "source": "合理用药百科",
-        "weight": 1196,
-        "updateTime": "2022-09-29 13:36:10",
-        "lables": [],
-        "status": 0,
-        "top": 1,
-        "description": "处方案例分析，带你学习更多处方药物使用问题。",
-        "html": null,
-        "cover": null,
-        "keywords": []
-      }, {
-        "id": 117194,
-        "title": "睡眠不好如何调理 12个小妙招助你轻松入睡",
-        "source": "三九养生堂",
-        "weight": 0,
-        "updateTime": "2022-09-27 09:46:30",
-        "lables": [],
-        "status": 0,
-        "top": 0,
-        "description": "睡眠不好是一种十分常见的情况，很多朋友因为习惯、工作、学习、生活等各方面的原因总是导致睡眠质量不高，那么睡眠不好如何调理呢?别着急，禁停啊就让我们一起看一看睡眠不好怎么办，睡眠不好饮食原则。",
-        "html": null,
-        "cover": null,
-        "keywords": []
-      }, {
-        "id": 117186,
-        "title": "睡眠不好如何调理 12个小妙招助你轻松入睡",
-        "source": "三九养生堂",
-        "weight": 0,
-        "updateTime": "2022-09-26 15:51:53",
-        "lables": [],
-        "status": 0,
-        "top": 1,
-        "description": "睡眠不好是一种十分常见的情况，很多朋友因为习惯、工作、学习、生活等各方面的原因总是导致睡眠质量不高，那么睡眠不好如何调理呢?别着急，禁停啊就让我们一起看一看睡眠不好怎么办，睡眠不好饮食原则。",
-        "html": null,
-        "cover": null,
-        "keywords": []
-      }, {
-        "id": 117191,
-        "title": "解决睡眠质量不好的五大方法",
-        "source": "医学媒体",
-        "weight": 0,
-        "updateTime": "2022-09-23 13:16:18",
-        "lables": ["string1", "123"],
-        "status": 0,
-        "top": 1,
-        "description": "解决睡眠质量不好的五大方法",
-        "html": null,
-        "cover": null,
-        "keywords": []
-      }, {
-        "id": 117193,
-        "title": "投入心脏介入30余载，率领“一站式”冠状动脉杂交手术开展",
-        "source": "医学界心血管频道",
-        "weight": 0,
-        "updateTime": "2022-09-23 13:02:57",
-        "lables": [],
-        "status": 0,
-        "top": 0,
-        "description": "林先和教授分享30年心内科从医历程。",
-        "html": null,
-        "cover": null,
-        "keywords": []
-      }, {
-        "id": 117192,
-        "title": "关注心血管代谢，跨领域提升患者综合获益",
-        "source": "医学界心血管频道",
-        "weight": 0,
-        "updateTime": "2022-09-23 13:02:56",
-        "lables": [],
-        "status": 0,
-        "top": 0,
-        "description": "关注代谢异常与CVD之间的相互作用，合理管理CVD患者的代谢稳态。",
-        "html": null,
-        "cover": null,
-        "keywords": []
-      }, {
-        "id": 116058,
-        "title": "重灾区！又一三甲医院科主任被抓",
-        "source": "医客",
-        "weight": 5898,
-        "updateTime": "2022-09-20 18:14:20",
-        "lables": [],
-        "status": 2,
-        "top": 1,
-        "description": "设备科室成医疗腐败“重灾区”。",
-        "html": null,
-        "cover": null,
-        "keywords": []
-      }]
+      operations: [
+        {func: "onDetail", name: "查看"},
+        {func: "onOpenDialog", name: "合并终端"},
+      ],
+      tableData: []
+    }
+  },
+  computed: {
+    form() {
+      return [...this.formInline.children, ...this.formInline.filters]
     }
   },
   methods: {
     getList() {
+      console.log('computed:', this.form);
+
       let param = {
         page: this.currentPage,
         pageSize: this.pageSize
       }
-      for (let item of this.formInline) {
-        if (item[item.formKey] !== null && item[item.formKey] !== "") {
-          param[item.formKey] = item[item.formKey]
+      for (let child of this.form) {
+        if (child.value !== null && child.value !== "") {
+          param[child.key] = child.value
         }
       }
-      console.log(param);
+      console.log("param:", param);
       // 调用接口
     },
     onSearch(form) {
+      console.log("onSearch", form);
       this.formInline = form;
       this.getList()
     },
     onPageChange(val) {
+      console.log("onPageChange", val);
       this.currentPage = val;
       this.getList()
     },
     onSelectChange(val) {
+      console.log("onSelectChange", val);
       this.multipleSelection = val;
     },
+    onOperate(val) {
+      this[val.type](val.value);
+    },
+    onDetail(val) {
+      console.log("onDetail", val);
+    },
+    onOpenDialog(val) {
+      console.log("openDialog", val);
+    },
+    filterChange(val) {
+      console.log("filterChange", val);
+      let name = Object.keys(val)[0];
+      let value = Object.values(val)[0];
+      let formObj = this.column.find(i => i.key == name);
+      let index = this.formInline.filters.findIndex(i => i.key == name);
+      this.formInline.filters[index].value = formObj.filterMultiple ? value : value[0]
+      this.getList()
+    }
   }
 }
 </script>
