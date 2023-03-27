@@ -20,8 +20,8 @@
                      :filterMultiple="item.filterMultiple" :key="item.key" :label="item.title"
                      :prop="item.key" :width="item.width" :align="item.align" :sortable="item.sortable">
       <template #default="scope">
-        <template v-if="item.filters">
-          <template v-for="(type) in item.filters" :key="type.key">
+        <template v-if="item.tags">
+          <template v-for="(type) in item.tags" :key="type.key">
             <el-tag v-if="scope.row[item.key]==type.value" :type="type.type" :effect="type.effect">
               {{ type.text }}
             </el-tag>
@@ -51,7 +51,7 @@ export default {
   emits: ["operate"],
   props: {
     formInline: {type: Object, required: true},
-    tableColumn: {type: Array, required: true},
+    tableColumn: {type: [Array, Object], required: true},
     tableData: {type: Array, required: true},
     currentPage: {type: Number, required: true},
     pageSize: {type: Number, required: true},
