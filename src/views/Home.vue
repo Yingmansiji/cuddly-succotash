@@ -1,5 +1,5 @@
 <template>
-  <custom-table :form-inline="formInline" :table-column="column" :table-data="tableData" :currentPage="currentPage"
+  <custom-table :collapse="true" :form-inline="formInline" :table-column="column" :table-data="tableData" :currentPage="currentPage"
                 :pageSize="pageSize" :total="total" :operations="operations" @operate="onOperate"/>
 </template>
 
