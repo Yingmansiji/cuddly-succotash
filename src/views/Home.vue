@@ -248,7 +248,7 @@ export default {
         "standardKey": "",
         "active": true,
         "codeType": null,
-        "gpsAddress": "上海市上海市闵行区宜山路2010号"
+        "gpsAddress": ""
       }, {
         "id": 225517,
         "name": "安庆皮肤研究所",
@@ -287,7 +287,7 @@ export default {
         "standardKey": "",
         "active": true,
         "codeType": null,
-        "gpsAddress": "新疆维吾尔自治区北屯市犍为县金粟镇星辰大海"
+        "gpsAddress": ""
       }, {
         "id": 225507,
         "name": "1312321",
@@ -326,7 +326,7 @@ export default {
         "standardKey": "",
         "active": true,
         "codeType": null,
-        "gpsAddress": "上海市上海市黄浦区人民大道200号-1321室"
+        "gpsAddress": ""
       }, {
         "id": 225504,
         "name": "辛集市化工路医院",
@@ -365,7 +365,7 @@ export default {
         "standardKey": "",
         "active": true,
         "codeType": null,
-        "gpsAddress": "河北省石家庄市辛集市农贸街"
+        "gpsAddress": ""
       }, {
         "id": 225500,
         "name": "巴南区龙洲湾街道社区卫生服务中心",
@@ -404,7 +404,7 @@ export default {
         "standardKey": "",
         "active": true,
         "codeType": null,
-        "gpsAddress": "重庆市重庆市巴南区渝南大道158号"
+        "gpsAddress": ""
       }, {
         "id": 225499,
         "name": "浦城县枫溪卫生院",
@@ -443,7 +443,7 @@ export default {
         "standardKey": "",
         "active": true,
         "codeType": null,
-        "gpsAddress": "福建省漳州市芗城区胜利西路120号"
+        "gpsAddress": ""
       }, {
         "id": 225498,
         "name": "陕西凤酒股份有限公司卫生所",
@@ -482,7 +482,7 @@ export default {
         "standardKey": "",
         "active": true,
         "codeType": null,
-        "gpsAddress": "陕西省宝鸡市凤翔区"
+        "gpsAddress": ""
       }]
     }
   },

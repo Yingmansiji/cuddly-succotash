@@ -1,5 +1,5 @@
 <template>
-  <div class="operations_bar">
+  <div class="operations_bar" v-if="hasForm||moreButtons.length>0">
     <custom-search-form :form-collapse-num="formCollapseNum" :collapse="collapse" :hasForm="hasForm"
                         :form-inline="formInline" :moreButtons="moreButtons"
                         @operate="searchOperation">
@@ -16,44 +16,50 @@
       <el-empty description="暂无数据"/>
     </template>
     <el-table-column v-if="hasSelection" type="selection" align="center" width="55"/>
-    <el-table-column v-for="item in tableColumn" :filters="item.filters" :column-key="item.key"
-                     :filterMultiple="item.filterMultiple" :key="item.key" :label="item.title"
-                     :prop="item.key" :width="item.width" :minWidth="item.minWidth" :align="item.align"
-                     :sortable="item.sortable">
-      <template #default="scope">
-        <template v-if="item.tags">
-          <template v-for="(type) in item.tags" :key="type.key">
-            <el-tag v-if="scope.row[item.key]==type.value" :type="type.type" :effect="type.effect">
-              {{ type.originValueKey ? scope.row[type.originValueKey] : type.text }}
-            </el-tag>
+    <template v-for="item in tableColumn" :key="item.key">
+      <el-table-column v-if="item.formatter" :formatter="item.formatter" :label="item.title"
+                       :prop="item.key" :width="item.width" :minWidth="item.minWidth" :align="item.align"
+                       :sortable="item.sortable"/>
+      <el-table-column v-else :filters="item.filters" :column-key="item.key"
+                       :filterMultiple="item.filterMultiple" :label="item.title"
+                       :prop="item.key" :width="item.width" :minWidth="item.minWidth" :align="item.align"
+                       :sortable="item.sortable">
+        <template #default="scope">
+          <template v-if="item.tags">
+            <template v-for="(type) in item.tags" :key="type.key">
+              <el-tag v-if="scope.row[item.key]==type.value" :type="type.type" :effect="type.effect">
+                {{ type.originValueKey ? scope.row[type.originValueKey] : type.text }}
+              </el-tag>
+            </template>
           </template>
-        </template>
-        <template v-else-if="item.key=='operation'">
-          <template v-for="(operate,operationIndex) in operations" :key="operationIndex">
-            <template v-if="operate.factor">
-              <template v-for="(fact,factIndex) in operate.factor" :key="factIndex">
-                <el-link :type="fact.type ? fact.type : 'primary'"
-                         @click="tableOperation(operate.func,scope.row)"
-                         v-if="fact.value==scope.row[fact.key]">{{ fact.name }}
+          <template v-else-if="item.key=='operation'">
+            <template v-for="(operate,operationIndex) in operations" :key="operationIndex">
+              <template v-if="operate.factor">
+                <template v-for="(fact,factIndex) in operate.factor" :key="factIndex">
+                  <el-link :type="fact.type ? fact.type : 'primary'"
+                           @click="tableOperation(operate.func,scope.row)"
+                           v-if="fact.value==scope.row[fact.key]">{{ fact.name }}
+                  </el-link>
+                  <span v-else/>
+                </template>
+              </template>
+              <template v-else>
+                <el-link :type="operate.type ? operate.type : 'primary'"
+                         @click="tableOperation(operate.func,scope.row)">
+                  {{ operate.name ? operate.name : scope.row[operate.key] }}
                 </el-link>
-                <span v-else/>
               </template>
             </template>
-            <template v-else>
-              <el-link :type="operate.type ? operate.type : 'primary'" @click="tableOperation(operate.func,scope.row)">
-                {{ operate.name ? operate.name : scope.row[operate.key] }}
-              </el-link>
-            </template>
           </template>
+          <template v-else-if="item.func">
+            <el-link :type="item.type ? item.type : 'primary'" @click="tableOperation(item.func,scope.row)">
+              {{ scope.row[item.key] }}
+            </el-link>
+          </template>
+          <template v-else>{{ scope.row[item.key] }}</template>
         </template>
-        <template v-else-if="item.func">
-          <el-link :type="item.type ? item.type : 'primary'" @click="tableOperation(item.func,scope.row)">
-            {{ scope.row[item.key] }}
-          </el-link>
-        </template>
-        <template v-else>{{ scope.row[item.key] }}</template>
-      </template>
-    </el-table-column>
+      </el-table-column>
+    </template>
   </el-table>
   <el-pagination v-if="pagination"
                  :currentPage="currentPage"

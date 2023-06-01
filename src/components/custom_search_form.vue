@@ -35,12 +35,12 @@
           <el-form-item v-if="!showMore">
             <el-button type="primary" @click="onSearch">搜索</el-button>
             <el-button type="info" @click="onReset('formInline')">重置</el-button>
-            <el-button type="text" @click="this.showMore=!this.showMore">
+            <el-link :underline="false" style="margin-left: 8px" type="primary" @click="this.showMore=!this.showMore">
               展开
               <el-icon>
                 <arrow-down/>
               </el-icon>
-            </el-button>
+            </el-link>
           </el-form-item>
           <TransitionGroup
               :duration="{ enter: 0, leave: 0 }"
@@ -80,12 +80,12 @@
               <el-form-item>
                 <el-button type="primary" @click="onSearch">搜索</el-button>
                 <el-button type="info" @click="onReset('formInline')">重置</el-button>
-                <el-button v-if="formInline.children.length>2" type="text" @click="this.showMore=!this.showMore">
+                <el-link :underline="false" v-if="formInline.children.length>2" style="margin-left: 8px" type="primary" @click="this.showMore=!this.showMore">
                   收起
                   <el-icon>
                     <arrow-up/>
                   </el-icon>
-                </el-button>
+                </el-link>
               </el-form-item>
             </template>
           </TransitionGroup>
@@ -126,7 +126,7 @@
         </template>
       </el-form>
     </template>
-    <div class="some_buttons">
+    <div class="some_buttons" v-if="moreButtons&&moreButtons.length>0">
       <template v-for="(btn,index) in moreButtons" :key="index">
         <el-popconfirm v-if="btn.isPopconfirm"
                        confirm-button-text="确定"
