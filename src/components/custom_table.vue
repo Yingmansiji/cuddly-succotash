@@ -17,7 +17,8 @@
     </template>
     <el-table-column v-if="hasSelection" type="selection" align="center" width="55"/>
     <template v-for="item in tableColumn" :key="item.key">
-      <el-table-column v-if="item.formatter" :formatter="item.formatter" :label="item.title"
+      <el-table-column v-if="item.formatter" :formatter="item.formatter" :filters="item.filters" :column-key="item.key"
+                       :filterMultiple="item.filterMultiple" :label="item.title"
                        :prop="item.key" :width="item.width" :minWidth="item.minWidth" :align="item.align"
                        :sortable="item.sortable"/>
       <el-table-column v-else :filters="item.filters" :column-key="item.key"
